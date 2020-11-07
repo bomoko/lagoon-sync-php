@@ -49,3 +49,10 @@ lagoon-sync:
     ignore-table:
       - kakone
     ignore-table-data:
+    local:
+      overrides:
+        hostname: "$AMAZEEIO_DB_HOST"
+        username: "$AMAZEEIO_DB_USERNAME"
+        password: "$AMAZEEIO_DB_PASSWORD"
+        port: "$AMAZEEIO_DB_PORT"
+        database: "drupal"

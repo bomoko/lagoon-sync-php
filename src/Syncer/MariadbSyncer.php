@@ -3,12 +3,11 @@
 namespace App\Syncer;
 
 
-class MariadbSyncer implements SyncerInterface
+class MariadbSyncer extends SyncerBase implements SyncerInterface
 {
 
     const SYNCTYPE_NAME = 'mariadb';
 
-    protected $configuration;
 
     protected $uniqueFilenameForOutput;
 
@@ -59,12 +58,24 @@ class MariadbSyncer implements SyncerInterface
 
     public function getLocalCommand()
     {
+        $config = $this->getLocalConfiguration();
 
+        $localcommand = sprintf("mysql -h%s -u%s -p%s -P%s %s < %s",
+          $config['hostname'],
+          $config['username'],
+          $config['password'],
+          $config['port'],
+          $config['database'],
+          $this->getTransferFilename()
+        );
+
+        return $localcommand;
     }
 
     public function getTransferFilename()
     {
         return $this->getOutputDirectory() . $this->uniqueFilenameForOutput;
+
     }
 
 }

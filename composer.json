@@ -4,7 +4,9 @@
     "require": {
         "symfony/yaml": "^5.1.8",
         "consolidation/robo": "^2.2.1",
-        "symfony/console": "^5.1.8"
+        "symfony/console": "^5.1.8",
+        "spatie/ssh": "^1.4",
+        "mikehaertl/php-shellcommand": "^1.6"
     },
     "autoload": {
 	"psr-4": {

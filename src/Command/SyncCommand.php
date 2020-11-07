@@ -4,6 +4,7 @@ namespace App\Command;
 
 use App\Syncer\MariadbSyncer;
 use App\SyncConfig;
+use App\SyncRunner;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -18,7 +19,7 @@ class SyncCommand extends Command
     protected function configure()
     {
         $this->addArgument('remote', InputArgument::REQUIRED,
-          'Which REMOTE environment are we syncing from?')
+          'Which REMOTE environment are we syncing from? (openshiftprojectname)')
           ->addArgument('resource', InputArgument::OPTIONAL,
             'Which resource are we syncing?');
     }
@@ -27,7 +28,8 @@ class SyncCommand extends Command
     {
         $syncConfigDetails = SyncConfig::loadSyncConfigFromFile();
         $syncer = new MariadbSyncer($syncConfigDetails);
-        var_dump($syncer->getRemoteCommand());
+        $syncRunner = new SyncRunner($syncer, $input->getArgument('remote'));
+        $syncRunner->run();
         return Command::SUCCESS;
     }
 

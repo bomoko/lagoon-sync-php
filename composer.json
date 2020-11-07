@@ -1,0 +1,21 @@
+{
+    "name": "bomoko/lagoon-sync-prototype",
+    "type": "project",
+    "require": {
+        "symfony/yaml": "^5.1.8",
+        "consolidation/robo": "^2.2.1",
+        "symfony/console": "^5.1.8"
+    },
+    "autoload": {
+	"psr-4": {
+		"App\\": "src/"
+	}
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Blaize Kaye",
+            "email": "blaize.kaye@amazee.com"
+        }
+    ]
+}

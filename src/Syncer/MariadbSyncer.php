@@ -75,7 +75,6 @@ class MariadbSyncer extends SyncerBase implements SyncerInterface
     public function getTransferFilename()
     {
         return $this->getOutputDirectory() . $this->uniqueFilenameForOutput;
-
     }
 
 }

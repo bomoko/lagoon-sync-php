@@ -40,9 +40,9 @@ class SyncRunner
         $this->runRemoteCommand();
         $this->transferFile();
         $this->runLocalCommand();
+        $this->cleanUp();
         return true;
     }
-
 
     protected function runRemoteCommand()
     {
@@ -93,7 +93,25 @@ class SyncRunner
     protected function cleanUp()
     {
         //remove remote file
+        $execString = sprintf("ssh -t -o \"UserKnownHostsFile=/dev/null\" -o \"StrictHostKeyChecking=no\" -p 32222 %s@ssh.lagoon.amazeeio.cloud 'rm %s'",
+          $this->remoteOpenshiftProjectName,
+          $this->syncer->getTransferFilename());
+        $command = new Command($execString);
+        if ($command->execute()) {
+            echo $command->getOutput();
+        } else {
+            echo $command->getError();
+            $exitCode = $command->getExitCode();
+        }
+
         //remove local file
+        $command = new Command("rm " . $this->syncer->getTransferFilename());
+        if ($command->execute()) {
+            echo $command->getOutput();
+        } else {
+            echo $command->getError();
+            $exitCode = $command->getExitCode();
+        }
     }
 
 }

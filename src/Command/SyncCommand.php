@@ -29,7 +29,7 @@ class SyncCommand extends Command
         $syncConfigDetails = SyncConfig::loadSyncConfigFromFile();
         $resource = $input->getArgument('resource');
 
-        $classname = ucfirst($resource) . 'Syncer';
+        $classname = 'App\\Syncer\\' . ucfirst($resource) . 'Syncer';
         if(!class_exists($classname)) {
             throw new \Exception("Syncing of resource type $classname not supported");
         }

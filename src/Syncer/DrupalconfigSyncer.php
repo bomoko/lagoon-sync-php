@@ -18,14 +18,6 @@ class DrupalconfigSyncer extends SyncerBase implements SyncerInterface
 
     public function __construct(\App\SyncConfig $config)
     {
-        //here we can do some checks to make sure that the configuration
-        //details look reasonable
-        $this->configuration = $config->getSyncConfigurationDetails(self::SYNCTYPE_NAME);
-        if (!array_key_exists('database', $this->configuration)) {
-            throw new \Exception(sprintf("Invalid configuration data for type: %s",
-              self::SYNCTYPE_NAME));
-        }
-
         $this->uniqueFilenameForOutput = uniqid(self::SYNCTYPE_NAME . "-sync-") . date('y-m-d') . '-' . uniqid();
     }
 
@@ -55,7 +47,7 @@ class DrupalconfigSyncer extends SyncerBase implements SyncerInterface
     {
         $config = $this->getLocalConfiguration();
 
-        $localcommand = sprintf("drush config-import --source=%s",
+        $localcommand = sprintf("drush config-import --source=%s --yes",
           $this->getTransferResourceName()
         );
 
@@ -67,4 +59,8 @@ class DrupalconfigSyncer extends SyncerBase implements SyncerInterface
         return $this->getOutputDirectory() . $this->uniqueFilenameForOutput;
     }
 
+    public function transferResourceType()
+    {
+        return self::TRANSFER_RESOURCE_TYPE_DIRECTORY;
+    }
 }

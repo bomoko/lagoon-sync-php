@@ -5,6 +5,9 @@ namespace App\Syncer;
 interface SyncerInterface
 {
 
+    const TRANSFER_RESOURCE_TYPE_FILE = "file";
+    const TRANSFER_RESOURCE_TYPE_DIRECTORY = "directory";
+
     public function __construct(\App\SyncConfig $config);
 
     /**
@@ -19,4 +22,6 @@ interface SyncerInterface
     public function getLocalCommand();
 
     public function getTransferResourceName();
+
+    public function transferResourceType();
 }

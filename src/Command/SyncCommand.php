@@ -36,7 +36,7 @@ class SyncCommand extends Command
 
         $syncer = new $classname($syncConfigDetails);
         $syncRunner = new SyncRunner($syncer, $input->getArgument('remote'));
-//        $syncRunner->run();
+        $syncRunner->run();
         return Command::SUCCESS;
     }
 

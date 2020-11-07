@@ -40,7 +40,7 @@ class SyncRunner
         $this->runRemoteCommand();
         $this->transferFile();
         $this->runLocalCommand();
-        $this->cleanUp();
+//        $this->cleanUp();
         return true;
     }
 
@@ -49,6 +49,9 @@ class SyncRunner
         $execString = sprintf("ssh -t -o \"UserKnownHostsFile=/dev/null\" -o \"StrictHostKeyChecking=no\" -p 32222 %s@ssh.lagoon.amazeeio.cloud '%s'",
           $this->remoteOpenshiftProjectName,
           $this->syncer->getRemoteCommand());
+
+        echo "Running : $execString\n";
+
         $command = new Command($execString);
         if ($command->execute()) {
             echo $command->getOutput();
@@ -62,11 +65,19 @@ class SyncRunner
     {
         //NOTE: These will be the same filename locally and remotely for now - we'll want to configure this to be overridden
         $remoteFile = $this->syncer->getTransferResourceName();
+
+        $remoteFile .= $this->syncer->transferResourceType() == SyncerInterface::TRANSFER_RESOURCE_TYPE_DIRECTORY ? "/" : ""; //We do this because of rsyncs quirks with file/directory transfers
+
+
         $localFile = $this->syncer->getTransferResourceName();
+
         $execString = sprintf('rsync -e "ssh -o LogLevel=ERROR -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -p 32222" -a %s@ssh.lagoon.amazeeio.cloud:%s %s',
           $this->remoteOpenshiftProjectName,
           $remoteFile,
           $localFile);
+
+        echo "Running : $execString\n";
+
         $command = new Command($execString);
         if ($command->execute()) {
             echo $command->getOutput();
@@ -81,6 +92,9 @@ class SyncRunner
         $remoteFile = $this->syncer->getTransferResourceName();
         $localFile = $this->syncer->getTransferResourceName();
         $execString = $this->syncer->getLocalCommand();
+
+        echo "Running : $execString\n";
+
         $command = new Command($execString);
         if ($command->execute()) {
             echo $command->getOutput();
@@ -105,7 +119,7 @@ class SyncRunner
         }
 
         //remove local file
-        $command = new Command("rm " . $this->syncer->getTransferResourceName());
+        $command = new Command("rm -rf " . $this->syncer->getTransferResourceName());
         if ($command->execute()) {
             echo $command->getOutput();
         } else {

@@ -56,3 +56,5 @@ lagoon-sync:
         password: "$AMAZEEIO_DB_PASSWORD"
         port: "$AMAZEEIO_DB_PORT"
         database: "drupal"
+  drupalconfig:
+    emptykey: "emptyvalue"

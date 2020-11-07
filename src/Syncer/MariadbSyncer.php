@@ -77,4 +77,9 @@ class MariadbSyncer extends SyncerBase implements SyncerInterface
         return $this->getOutputDirectory() . $this->uniqueFilenameForOutput;
     }
 
+    public function transferResourceType()
+    {
+        return self::TRANSFER_RESOURCE_TYPE_FILE;
+    }
+
 }

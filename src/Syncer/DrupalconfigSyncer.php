@@ -3,10 +3,10 @@
 namespace App\Syncer;
 
 
-class MariadbSyncer extends SyncerBase implements SyncerInterface
+class DrupalconfigSyncer extends SyncerBase implements SyncerInterface
 {
 
-    const SYNCTYPE_NAME = 'mariadb';
+    const SYNCTYPE_NAME = 'drupalconfig';
 
 
     protected $uniqueFilenameForOutput;
@@ -26,7 +26,7 @@ class MariadbSyncer extends SyncerBase implements SyncerInterface
               self::SYNCTYPE_NAME));
         }
 
-        $this->uniqueFilenameForOutput = uniqid(self::SYNCTYPE_NAME . "-sync-") . date('y-m-d') . '-' . uniqid() . '.sql';
+        $this->uniqueFilenameForOutput = uniqid(self::SYNCTYPE_NAME . "-sync-") . date('y-m-d') . '-' . uniqid();
     }
 
     protected function getOutputDirectory()
@@ -45,12 +45,7 @@ class MariadbSyncer extends SyncerBase implements SyncerInterface
     public function getRemoteCommand()
     {
         //let's build our command
-        $remoteCommand = sprintf("mysqldump -h%s -u%s -p%s -P%s %s > %s",
-          $this->configuration['hostname'],
-          $this->configuration['username'],
-          $this->configuration['password'],
-          $this->configuration['port'],
-          $this->configuration['database'],
+        $remoteCommand = sprintf("drush config-export --destination=%s",
           $this->getTransferResourceName()
         );
         return $remoteCommand;
@@ -60,12 +55,7 @@ class MariadbSyncer extends SyncerBase implements SyncerInterface
     {
         $config = $this->getLocalConfiguration();
 
-        $localcommand = sprintf("mysql -h%s -u%s -p%s -P%s %s < %s",
-          $config['hostname'],
-          $config['username'],
-          $config['password'],
-          $config['port'],
-          $config['database'],
+        $localcommand = sprintf("drush config-import --source=%s",
           $this->getTransferResourceName()
         );
 

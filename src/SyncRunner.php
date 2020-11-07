@@ -61,8 +61,8 @@ class SyncRunner
     protected function transferFile()
     {
         //NOTE: These will be the same filename locally and remotely for now - we'll want to configure this to be overridden
-        $remoteFile = $this->syncer->getTransferFilename();
-        $localFile = $this->syncer->getTransferFilename();
+        $remoteFile = $this->syncer->getTransferResourceName();
+        $localFile = $this->syncer->getTransferResourceName();
         $execString = sprintf('rsync -e "ssh -o LogLevel=ERROR -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -p 32222" -a %s@ssh.lagoon.amazeeio.cloud:%s %s',
           $this->remoteOpenshiftProjectName,
           $remoteFile,
@@ -78,8 +78,8 @@ class SyncRunner
 
     protected function runLocalCommand()
     {
-        $remoteFile = $this->syncer->getTransferFilename();
-        $localFile = $this->syncer->getTransferFilename();
+        $remoteFile = $this->syncer->getTransferResourceName();
+        $localFile = $this->syncer->getTransferResourceName();
         $execString = $this->syncer->getLocalCommand();
         $command = new Command($execString);
         if ($command->execute()) {
@@ -95,7 +95,7 @@ class SyncRunner
         //remove remote file
         $execString = sprintf("ssh -t -o \"UserKnownHostsFile=/dev/null\" -o \"StrictHostKeyChecking=no\" -p 32222 %s@ssh.lagoon.amazeeio.cloud 'rm %s'",
           $this->remoteOpenshiftProjectName,
-          $this->syncer->getTransferFilename());
+          $this->syncer->getTransferResourceName());
         $command = new Command($execString);
         if ($command->execute()) {
             echo $command->getOutput();
@@ -105,7 +105,7 @@ class SyncRunner
         }
 
         //remove local file
-        $command = new Command("rm " . $this->syncer->getTransferFilename());
+        $command = new Command("rm " . $this->syncer->getTransferResourceName());
         if ($command->execute()) {
             echo $command->getOutput();
         } else {

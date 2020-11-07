@@ -18,5 +18,5 @@ interface SyncerInterface
 
     public function getLocalCommand();
 
-    public function getTransferFilename();
+    public function getTransferResourceName();
 }

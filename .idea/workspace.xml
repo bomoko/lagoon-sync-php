@@ -2,8 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="66d3a49d-006e-4371-9a3b-2ab73d930422" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/SyncRunner.php" afterPath="$PROJECT_DIR$/src/SyncRunner.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Syncer/MariadbSyncer.php" afterPath="$PROJECT_DIR$/src/Syncer/MariadbSyncer.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -314,12 +313,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1604654337898</updated>
-      <workItem from="1604654339083" duration="18381000" />
+      <workItem from="1604654339083" duration="18838000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="18381000" />
+    <option name="totallyTimeSpent" value="18838000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="67" y="25" width="1853" height="1055" extended-state="6" />
